@@ -9,11 +9,30 @@ import android.view.MenuItem
 
 class MainActivity : AppCompatActivity() {
 
+    private var titleList = mutableListOf<String>()
+    private var descList = mutableListOf<String>()
+    private var imageList = mutableListOf<Int>()
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        postToList()
+
+        rv_recyclerView.LayoutManager = LinearLayoutManager(context:this)
+        rv_recyclerView.adapter = RecyclerAdapter(titleList, descList, imageList)
+    }
+    private fun addToList(title:String, description: String, image: Int) {
+        titleList.add(title)
+        descList.add(description)
+        imageList.add(image)
+    }
+    private fun postToList() {
+        for (i:int in 1..25)
+            addToList(title: "Title $i", description: "Description $i", R.mipmap.ic_launcher_round )
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
